@@ -60,6 +60,21 @@ module ``about the stock example`` =
 
     [<Koan>]
     let YouGotTheAnswerCorrect() =
-        let result =  __
+        let splitCommas (x:string) =
+            x.Split([|','|])
+
+        let mutable greatestDiff = 0.
+        let mutable greatestDiffDate = ""
+        for row in List.tail stockData do
+            let columns = splitCommas row
+            let dateValue = columns.[0]
+            let openValue = System.Double.Parse columns.[1]
+            let closeValue = System.Double.Parse columns.[4]
+            let diff = abs (openValue - closeValue)
+            if diff > greatestDiff then
+                greatestDiff <- diff
+                greatestDiffDate <- dateValue
+
+        let result =  greatestDiffDate
         
         AssertEquality "2012-03-13" result
